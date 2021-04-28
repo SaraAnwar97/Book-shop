@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => {
       const parsedBody = Buffer.concat(body).toString(); ////create a new Buffer and add all chunks in body, in it   
       //console.log(parsedBody); 
       const message = parsedBody.split('=')[1]; // index[1] is the second element in resulting array which is the value(message)/ right element to the = sign
-      fs.writeFileSync('message.txt', message);
+      fs.writeFileSync('message.txt', message); // Sync: synchronous, blocks code execution of next line until file is created
     }); // after parsing incoming reques
 
     // res.writeHead(302,{}) //302: redirection
