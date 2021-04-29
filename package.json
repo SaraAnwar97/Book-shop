@@ -5,7 +5,7 @@
   "main": "Basic_node/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Basic_node/app.js",
+    "start": "nodemon Basic_node/app.js",
     "start-server": "node Basic_node/app.js"
   },
   "repository": {

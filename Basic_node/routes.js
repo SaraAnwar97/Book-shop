@@ -37,6 +37,7 @@ const requestHandler = (req,res) =>{
       res.write('</html>');
       res.end();
 };
+
 //export method 1
 // register function requestHandler
 //module.exports = requestHandler; //global object module exposed by node,  with export property
