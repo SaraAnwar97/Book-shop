@@ -21,18 +21,19 @@ const server = http.createServer((req, res) => {
       console.log(chunk);
       body.push(chunk);
     }); // event listener
-    req.on('end', () => {
+    return req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString(); ////create a new Buffer and add all chunks in body, in it   
       //console.log(parsedBody); 
       const message = parsedBody.split('=')[1]; // index[1] is the second element in resulting array which is the value(message)/ right element to the = sign
-      fs.writeFileSync('message.txt', message); // Sync: synchronous, blocks code execution of next line until file is created
+      fs.writeFile('message.txt', message,(err)=>{
+ // err: error object , returns null if no error occured, else returns an error handling response
+  // res.writeHead(302,{}) //302: redirection
+  res.statusCode = 302;
+  res.setHeader('Location', '/');
+  return res.end();
     }); // after parsing incoming reques
-
-    // res.writeHead(302,{}) //302: redirection
-    res.statusCode = 302;
-    res.setHeader('Location', '/');
-    return res.end();
-  }
+  });
+}
   res.setHeader('Content-Type', 'text/html');
   res.write('<html>');
   res.write('<head><title>My First Page</title><head>');
