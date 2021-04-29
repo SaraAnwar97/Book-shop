@@ -5,10 +5,9 @@
   "main": "Basic_node/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node Basic_node/app.js", 
-    "start-server":"node Basic_node/app.js"
+    "start": "node Basic_node/app.js",
+    "start-server": "node Basic_node/app.js"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SaraAnwar97/node.git"
@@ -18,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/SaraAnwar97/node/issues"
   },
-  "homepage": "https://github.com/SaraAnwar97/node#readme"
+  "homepage": "https://github.com/SaraAnwar97/node#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
