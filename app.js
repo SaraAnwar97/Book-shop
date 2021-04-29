@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
     }); // event listener
     return req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString(); ////create a new Buffer and add all chunks in body, in it   
-      //console.log(parsedBody); 
+      console.log(parsedBody); 
       const message = parsedBody.split('=')[1]; // index[1] is the second element in resulting array which is the value(message)/ right element to the = sign
       fs.writeFile('message.txt', message,(err)=>{
  // err: error object , returns null if no error occured, else returns an error handling response
