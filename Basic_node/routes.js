@@ -30,6 +30,7 @@ const requestHandler = (req,res) =>{
         }); // after parsing incoming reques
       });
     }
+    
       res.setHeader('Content-Type', 'text/html');
       res.write('<html>');
       res.write('<head><title>My First Page</title><head>');
