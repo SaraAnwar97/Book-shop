@@ -7,8 +7,9 @@ const shopRoutes = require('./routes/shop');
 
 
 app.use(bodyParser.urlencoded({extended:false}));
-
-app.use(adminRoutes);
+//filtering paths
+//only routes starting with '/admin' will go to adminRoutes file
+app.use('/admin',adminRoutes);
 app.use(shopRoutes);
 //adding 404 error page , use: handles all http methods not only get requests
 app.use((req,res,next)=>{
