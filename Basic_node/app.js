@@ -8,6 +8,7 @@ const shopRoutes = require('./routes/shop');
 
 
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(express.static(path.join(__dirname,'public'))); // serving files statically so user can access them
 //filtering paths
 //only routes starting with '/admin' will go to adminRoutes file
 app.use('/admin',adminRoutes);
