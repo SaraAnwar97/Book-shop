@@ -10,7 +10,8 @@
     router.get('/', (req, res, next) => {
       const products = adminData.products;
       res.render('shop',{prods: products,
-        docTitle: 'shop'
+        pageTitle: 'shop',
+        path : '/'
        });// second arg: pass data added to view
     });
     

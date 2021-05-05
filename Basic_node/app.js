@@ -15,7 +15,7 @@ app.use('/admin',adminData.routes);//acessing routes object
 app.use(shopRoutes);
 //adding 404 error page , use: handles all http methods not only get requests
 app.use((req,res,next)=>{
-res.status(404).render('404');
+res.status(404).render('404' ,{pageTitle : 'Page not found'})
 });
 
 
