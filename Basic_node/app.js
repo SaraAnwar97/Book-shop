@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser=require('body-parser');
 const path = require('path');
 const app = express(); // initialize a new object where express.js will store and manager our app
-
+app.set('view engine','pug'); // setting default template engine to pug
+app.set('views','views');//where i am keeping my html files
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
