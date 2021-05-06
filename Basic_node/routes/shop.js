@@ -12,7 +12,10 @@
       res.render('shop',{prods: products,
         pageTitle: 'shop',
         path : '/',
-        hasProducts: products.length > 0
+        hasProducts: products.length > 0,
+        activeShop: true,
+        productCSS: true
+        //layout:false (won't use default layout)
        });// second arg: pass data added to view
     });
     
