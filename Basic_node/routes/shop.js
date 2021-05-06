@@ -11,7 +11,8 @@
       const products = adminData.products;
       res.render('shop',{prods: products,
         pageTitle: 'shop',
-        path : '/'
+        path : '/',
+        hasProducts: products.length > 0
        });// second arg: pass data added to view
     });
     
