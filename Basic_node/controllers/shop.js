@@ -11,6 +11,13 @@ exports.getProducts = (req, res, next) => {
 });
   };
 
+exports.getProduct = (req,res,next)=>{
+    //express offers a params object on our request
+    const prodId = req.params.productId; // params.(name after :)
+    console.log(prodId);
+    res.redirect('/');
+}
+
 exports.getIndex = (req,res,next) =>{
     Product.fetchAll((products)=>{
         res.render('shop/index',{prods: products,
