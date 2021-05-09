@@ -38,4 +38,11 @@ module.exports = class Product {
        getProductsFromFile(cb);
        
     }
-}
+
+    static findById(id,cb){
+        getProductsFromFile(products =>{
+            const product = products.find(p => p.id === id ); //searches every element in the arr and returns element with val true
+            cb(product);
+        });
+    }
+};

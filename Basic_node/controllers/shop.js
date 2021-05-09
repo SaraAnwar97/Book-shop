@@ -14,7 +14,9 @@ exports.getProducts = (req, res, next) => {
 exports.getProduct = (req,res,next)=>{
     //express offers a params object on our request
     const prodId = req.params.productId; // params.(name after :)
-    console.log(prodId);
+Product.findById(prodId, (product)=>{
+    console.log(product);
+});
     res.redirect('/');
 }
 
