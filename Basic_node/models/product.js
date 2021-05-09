@@ -24,6 +24,7 @@ module.exports = class Product {
     }
 
     save() {
+        this.id = Math.random().toString();//adding a unique id to each product
         getProductsFromFile(products =>{
             products.push(this);
             //.stringify(): takes js obj/ arr , converts it into Json 
