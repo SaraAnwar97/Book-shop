@@ -5,7 +5,7 @@ exports.getAddProduct = (req,res,next)=>{
     path:'admin/add-product',
  });
 };
-
+// in post requests, you use req body
 exports.postAddProduct = (req,res,next)=>{
     const title = req.body.title;
     const imageUrl = req.body.imageUrl;
