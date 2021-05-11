@@ -1,8 +1,8 @@
 const Product = require('../models/product'); // importing Product class
 exports.getAddProduct = (req,res,next)=>{
-    res.render('admin/add-product',{
+    res.render('admin/edit-product',{
     pageTitle:'Add product',
-    path:'admin/add-product',
+    path:'admin/add-product'
  });
 };
 // in post requests, you use req body
@@ -16,6 +16,17 @@ exports.postAddProduct = (req,res,next)=>{
     res.redirect('/');
 };
 
+exports.getEditProduct = (req,res,next)=>{
+    const editMode = req.query.edit;
+    if(! editMode){
+        return res.redirect('/');
+    }
+    res.render('admin/edit-product',{
+    pageTitle:'edit product',
+    path:'admin/edit-product',
+    editing: editMode
+ });
+};
 exports.getProductList = (req,res,next) =>{
     Product.fetchAll((products)=>{
         res.render('admin/product-list',{
