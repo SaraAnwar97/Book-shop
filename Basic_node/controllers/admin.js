@@ -2,7 +2,8 @@ const Product = require('../models/product'); // importing Product class
 exports.getAddProduct = (req,res,next)=>{
     res.render('admin/edit-product',{
     pageTitle:'Add product',
-    path:'admin/add-product'
+    path:'admin/add-product',
+    editing: false
  });
 };
 // in post requests, you use req body
@@ -21,12 +22,21 @@ exports.getEditProduct = (req,res,next)=>{
     if(! editMode){
         return res.redirect('/');
     }
-    res.render('admin/edit-product',{
-    pageTitle:'edit product',
-    path:'admin/edit-product',
-    editing: editMode
- });
+    const prodId = req.params.productId; //extracting productId from URL in routes
+    Product.findById(prodId, product =>{
+        if(!product){
+            return res.redirect('/');
+        }
+        res.render('admin/edit-product',{
+            pageTitle:'edit product',
+            path:'admin/edit-product',
+            editing: editMode,
+            product : product
+         });
+    });
+
 };
+
 exports.getProductList = (req,res,next) =>{
     Product.fetchAll((products)=>{
         res.render('admin/product-list',{
