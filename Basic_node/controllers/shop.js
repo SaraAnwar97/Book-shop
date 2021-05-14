@@ -2,13 +2,17 @@ const Product = require('../models/product'); // importing Product class
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll((products)=>{
+    Product.fetchAll()
+    .then(products =>{
         res.render('shop/product-list',{prods: products,
             pageTitle: 'All Products',
             path : '/product-list',
            
     });
-});
+})
+    .catch(err =>{
+        console.log(err);
+    });
   };
 
 exports.getProduct = (req,res,next)=>{
@@ -23,14 +27,19 @@ Product.findById(prodId, (product)=>{
 });
 }
 
-exports.getIndex = (req,res,next) =>{
-    Product.fetchAll((products)=>{
-        res.render('shop/index',{prods: products,
-            pageTitle: 'shop',
-            path : '/',
+exports.getIndex = (req, res, next) => {
+    Product.fetchAll()
+    .then(products =>{
+        res.render('shop/product-list',{prods: products,
+            pageTitle: 'All Products',
+            path : '/product-list',
+           
     });
-});
-};
+})
+    .catch(err =>{
+        console.log(err);
+    });
+  };
 
 exports.getCart = (req,res,next) => {
     Cart.getCart(cart =>{

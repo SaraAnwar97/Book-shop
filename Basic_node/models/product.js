@@ -10,8 +10,9 @@ class Product {
     }
 
     save() {
-     const db = getDb();
+     const db = getDb(); //getting access to db
     //connecting db to products connection
+    //.insertOne() returns a promise
      return db.collection('products').insertOne(this)
      .then(result =>{
         console.log(result);
@@ -19,6 +20,19 @@ class Product {
      .catch(err =>{
         console.log(err);
      }); 
+    }
+
+    static fetchAll(){
+        const db = getDb();
+        //.find() returns a cursor
+        return db.collection('products').find().toArray()
+        .then(products =>{
+            console.log(products);
+            return products;
+         })
+         .catch(err =>{
+            console.log(err);
+         });
     }
 }
 
