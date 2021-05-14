@@ -1,3 +1,4 @@
+const mongodb = require('mongodb');
 const getDb= require('../util/database').getDb;
 
 class Product {
@@ -13,7 +14,9 @@ class Product {
      const db = getDb(); //getting access to db
     //connecting db to products connection
     //.insertOne() returns a promise
-     return db.collection('products').insertOne(this)
+     return db.
+     collection('products').
+     insertOne(this)
      .then(result =>{
         console.log(result);
      })
@@ -25,7 +28,10 @@ class Product {
     static fetchAll(){
         const db = getDb();
         //.find() returns a cursor
-        return db.collection('products').find().toArray()
+        return db
+        .collection('products')
+        .find()
+        .toArray()
         .then(products =>{
             console.log(products);
             return products;
@@ -33,6 +39,22 @@ class Product {
          .catch(err =>{
             console.log(err);
          });
+    }
+
+    static findById(prodId){
+      const db = getDb();
+      return db
+      .collection('products')
+      .find({_id : new mongodb.ObjectId(prodId)})
+      .next() //returns next and last doc returned by find()
+      .then(product =>{
+         console.log(product);
+         return product;
+      })
+      .catch(err =>{
+         console.log(err);
+      });
+
     }
 }
 
