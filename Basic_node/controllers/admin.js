@@ -74,14 +74,22 @@ exports.getProductList = (req,res,next) =>{
             pageTitle: 'Admin Products',
             path : '/admin/product-list',
     })
+})
     .catch(err => {
         console.log(err);
-    })
-});
+    });
+
 };
 
-// exports.postDeleteProduct=(req,res,next)=>{
-//     const prodId = req.body.productId;
-//     Product.Delete(prodId);
-//     res.redirect('/admin/product-list');
-// };
+exports.postDeleteProduct=(req,res,next)=>{
+    const prodId = req.body.productId;
+    Product.deleteById(prodId)
+    .then(()=>{
+        console.log('destroyed product')
+        res.redirect('/admin/product-list');
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+   
+};

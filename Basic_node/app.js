@@ -12,6 +12,16 @@ const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public'))); // serving files statically so user can access them
+
+app.use((req, res, next) => {
+  // User.findById(1)
+  //   .then(user => {
+  //     req.user = user;
+  //     next();
+  //   })
+  //   .catch(err => console.log(err));
+  next();
+});
 //filtering paths
 app.use('/admin',adminRoutes);//acessing routes object
 app.use(shopRoutes);
