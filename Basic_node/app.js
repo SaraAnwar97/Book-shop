@@ -3,7 +3,7 @@ const bodyParser=require('body-parser');
 const path = require('path');
 const app = express(); // initialize a new object where express.js will store and manage our app
 const errorController = require('./controllers/404');
-
+const mongoConnect = require('./util/database');
 app.set('view engine','ejs'); // setting default template engine to ejs
 app.set('views','views');//where i am keeping my html files
 const adminRoutes = require('./routes/admin');
@@ -19,4 +19,6 @@ app.use(shopRoutes);
 app.use(errorController.get404Page);
 
 
+mongoConnect(()=>{
 app.listen(3000);
+});
