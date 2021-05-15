@@ -13,11 +13,27 @@ class User{
         const db = getDb();
         return db.collection('users').insertOne(this);
     }
-
+    //every user has one cart , 1-1
     addToCart(product){
-        //product.quantity = 1; //adding a field on the fly
-        //(...product)pulling out all properties in product
-const updatedCart = { items:[{productId: new ObjectId(product._id), quantity: 1}]} ;
+
+        const cartProductIndex = this.cart.items.findIndex(cp =>{
+            // return cp.productId == product._id ;
+            return cp.productId.toString() === product._id.toString(); // if not -1 , it exists in the cart
+        }); 
+        let newQuantity = 1;
+        const updatedCartItems = [...this.cart.items];
+       if(cartProductIndex >= 0){ //exists
+        newQuantity = this.cart.items[cartProductIndex].quantity + 1;
+        updatedCartItems[cartProductIndex].quantity = newQuantity;
+       }else{ //does not exist
+        updatedCartItems.push({
+            productId: new ObjectId(product._id),
+             quantity: newQuantity
+            });
+       }
+const updatedCart = {
+    items:updatedCartItems
+};
 const db = getDb();
 return db
 .collection('users')
