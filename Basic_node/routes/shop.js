@@ -11,7 +11,7 @@
     // //: indicates a variable (dynamic) segment to express
    router.get('/products/:productId',shopController.getProduct);
     // router.get('/cart', shopController.getCart);
-    // router.post('/cart', shopController.postCart);
+     router.post('/cart', shopController.postCart);
     // router.post('/cart-delete-item', shopController.postDeleteCart);
     // router.get('/orders', shopController.getOrders);
     // router.get('/checkout', shopController.getChekout);
