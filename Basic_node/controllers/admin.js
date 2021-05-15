@@ -12,11 +12,12 @@ exports.postAddProduct = (req,res,next)=>{
     const imageUrl = req.body.imageUrl;
     const description = req.body.description;
     const price = req.body.price;
-    const product = new Product(title,imageUrl,description,price);
+    //storing user id as a reference to the user who's adding a prod
+    const product = new Product(title,imageUrl,description,price,null,req.user._id);
     product.save()
     .then(result =>{
         console.log('product created');
-        res.redirect('/admin/products');
+        res.redirect('/admin/product-list');
     })
     .catch(err =>{
         console.log(err);
