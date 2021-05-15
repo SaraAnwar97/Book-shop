@@ -83,10 +83,12 @@ exports.getOrders = (req,res,next) => {
 
 exports.postDeleteCart = (req, res, next) => {
     const prodId = req.body.productId;
-    Product.findById(prodId, product => {
-      Cart.deleteProduct(prodId, product.price);
-      res.redirect('/cart');
-    });
+    req.user
+    .deleteCart(prodId)
+    .then(result=>{
+        res.redirect('/cart');
+    })
+    .catch(err=>console.log(err));
   };
 
 

@@ -63,6 +63,19 @@ return db
         });
     }
 
+    deleteCart(productId){
+      const updatedItem = this.cart.items.filter(item => {
+          return item.productId.toString() !== productId.toString(); //return false to remove item
+      });
+      const db = getDb();
+        return db
+        .collection('users')
+        .updateOne(
+            { _id: new ObjectId(this._id) },
+            { $set: {cart: {items: updatedItem } }}
+            );
+    }
+
     static findById(userId){
         const db = getDb();
         return db
