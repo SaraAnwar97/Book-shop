@@ -78,9 +78,19 @@ return db
 
     addOrder(){
     const db = getDb();
-       return db
+    return this.getCart().then(products =>{
+        const order = {
+            items : products, //an arr of products with product info and its qty
+            user : {
+                _id : new ObjectId(this._id),
+                name : this.name,
+                email : this.email
+            }
+        };
+        return db
        .collection('orders')
-       .insertOne(this.cart)
+       .insertOne(order);
+    })
        .then(result => {
            this.cart = {items : []};
            return db
@@ -93,6 +103,8 @@ return db
 
 
     }
+
+   
 
 
     static findById(userId){
