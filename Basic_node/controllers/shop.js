@@ -74,6 +74,21 @@ exports.postCart = (req, res, next) => {
     });
   };
 
+  exports.getOrder = (req,res,next) => {
+    req.user
+    .getOrders()
+    .then(orders => {
+     res.render('shop/orders',{
+         path : '/orders',
+         pageTitle: 'Your orders',
+         orders: orders
+     });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+    };
+
 exports.postOrder = (req,res,next) => {
     req.user
     .addOrder()
