@@ -14,6 +14,7 @@ cart:{
     // an arr of docs
     items: [{
         productId: { type: Schema.Types.ObjectId,
+            ref: 'Product',
         required: true
         },
         quantity:{
