@@ -19,6 +19,7 @@ const productSchema = new Schema({
     }
 });
 
+module.exports = mongoose.model('Product',productSchema); //connect schema with a name
 
 // const mongodb = require('mongodb');
 
