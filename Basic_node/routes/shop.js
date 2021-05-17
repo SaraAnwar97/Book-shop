@@ -4,8 +4,8 @@
     
     const router = express.Router();
     
-  //   router.get('/', shopController.getIndex);
-  //   router.get('/products',shopController.getProducts);
+    router.get('/', shopController.getIndex);
+    router.get('/products',shopController.getProducts);
   //   // // router.get('/products/delete'); //spicific routes before dynamic segment
   //   // //products/37474783(any random no)
   //   // //: indicates a variable (dynamic) segment to express

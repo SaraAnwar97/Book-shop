@@ -2,8 +2,9 @@ const Product = require('../models/product'); // importing Product class
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
+    Product.find()
     .then(products =>{
+        console.log(products);
         res.render('shop/product-list',{prods: products,
             pageTitle: 'All Products',
             path : '/product-list',
@@ -33,7 +34,7 @@ Product.findById(prodId)
 }
 
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll()
+    Product.find()
     .then(products =>{
         res.render('shop/product-list',{prods: products,
             pageTitle: 'All Products',
