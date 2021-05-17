@@ -61,8 +61,14 @@ exports.postEditProduct=(req,res,next)=>{
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
     const updatedDescription = req.body.description;
-    const product = new Product(updatedTitle, updatedImageUrl,updatedDescription,updatedPrice, prodId);
-   product.save()
+   Product.findById(prodId).then(product => {
+       //product is a mongoose object with all mongoose methods
+       product.title = updatedTitle,
+       product.price = updatedPrice
+       product.description = updatedDescription,
+       product.imageUrl = updatedImageUrl
+       return product.save();
+   })
    .then(result =>{
        console.log('product updated');
        res.redirect('/admin/product-list')
@@ -75,7 +81,7 @@ exports.postEditProduct=(req,res,next)=>{
 
 exports.getProductList = (req,res,next) =>{
     
-    Product.fetchAll()
+    Product.find()
     .then(products => {
         res.render('admin/product-list',{
             prods: products,
