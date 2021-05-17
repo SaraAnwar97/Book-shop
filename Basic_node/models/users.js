@@ -57,8 +57,16 @@ const updatedItem = this.cart.items.filter(item => {
 });
 this.cart.items = updatedItem;
 return this.save();
-
 };
+
+userSchema.methods.clearCart = function() {
+    this.cart =  {
+        items: []
+    };
+return this.save();
+};
+
+
 
 module.exports = mongoose.model('user', userSchema);
 
