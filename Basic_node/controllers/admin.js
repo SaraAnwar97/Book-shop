@@ -3,7 +3,8 @@ exports.getAddProduct = (req,res,next)=>{
     res.render('admin/edit-product',{
     pageTitle:'Add product',
     path:'admin/add-product',
-    editing: false
+    editing: false,
+    isAuthenticated: req.isLoggedIn
  });
 };
 // in post requests, you use req body
@@ -47,7 +48,8 @@ exports.getEditProduct = (req,res,next)=>{
             pageTitle:'edit product',
             path:'admin/edit-product',
             editing: editMode,
-            product : product
+            product : product,
+            isAuthenticated: req.isLoggedIn
          });
     })
     .catch(err =>{
@@ -88,6 +90,7 @@ exports.getProductList = (req,res,next) =>{
             prods: products,
             pageTitle: 'Admin Products',
             path : '/admin/product-list',
+            isAuthenticated: req.isLoggedIn
     })
 })
     .catch(err => {
