@@ -9,6 +9,7 @@ app.set('view engine','ejs'); // setting default template engine to ejs
 app.set('views','views');//where i am keeping my html files
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authenticationRoutes = require('./routes/authentication');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public'))); // serving files statically so user can access them
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 // filtering paths
 app.use('/admin',adminRoutes);//acessing routes object
 app.use(shopRoutes);
+app.use(authenticationRoutes);
 //adding 404 error page , use: handles all http methods not only get requests
 app.use(errorController.get404Page);
 //const url = 'mongodb+srv://Sara:Ss4923@cluster0.ldpfv.mongodb.net/shop?retryWrites=true&w=majority';
