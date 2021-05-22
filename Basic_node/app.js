@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser=require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const path = require('path');
 const app = express(); // initialize a new object where express.js will store and manage our app
 const errorController = require('./controllers/404');
@@ -13,7 +14,7 @@ const authenticationRoutes = require('./routes/authentication');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.static(path.join(__dirname,'public'))); // serving files statically so user can access them
-
+app.use(session({secret: 'my secret', resave:false, saveUninitialized:false}))
 app.use((req, res, next) => {
   User.findById("60a1d3760fd0460b2f1cc4c5")
     .then(user => {
