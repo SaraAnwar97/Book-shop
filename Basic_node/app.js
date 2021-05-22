@@ -28,15 +28,8 @@ app.use(session(
   store: store
 })
 );
-app.use((req, res, next) => {
-  User.findById("60a1d3760fd0460b2f1cc4c5")
-    .then(user => {
-      req.user = user; //storing user with id in our req from db
-      next();
-    })
-    .catch(err => console.log(err));
-});
-// filtering paths
+
+// filt ering paths
 app.use('/admin',adminRoutes);//acessing routes object
 app.use(shopRoutes);
 app.use(authenticationRoutes);

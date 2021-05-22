@@ -4,7 +4,7 @@ exports.getAddProduct = (req,res,next)=>{
     pageTitle:'Add product',
     path:'admin/add-product',
     editing: false,
-    isAuthenticated: req.isLoggedIn
+    isAuthenticated: req.session.isLoggedIn
  });
 };
 // in post requests, you use req body
@@ -20,7 +20,7 @@ exports.postAddProduct = (req,res,next)=>{
             price:price,
             description:description,
             imageUrl:imageUrl,
-            userId : req.user._id
+            userId : req.session.user
         }
     );
     product.save()
@@ -49,7 +49,7 @@ exports.getEditProduct = (req,res,next)=>{
             path:'admin/edit-product',
             editing: editMode,
             product : product,
-            isAuthenticated: req.isLoggedIn
+            isAuthenticated: req.session.isLoggedIn
          });
     })
     .catch(err =>{
@@ -90,7 +90,7 @@ exports.getProductList = (req,res,next) =>{
             prods: products,
             pageTitle: 'Admin Products',
             path : '/admin/product-list',
-            isAuthenticated: req.isLoggedIn
+            isAuthenticated: req.session.isLoggedIn
     })
 })
     .catch(err => {
