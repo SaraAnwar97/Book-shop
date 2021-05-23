@@ -33,3 +33,13 @@ exports.getLogin = (req,res,next) => {
     res.redirect('/')
   });
  };
+
+ exports.getSignup = (req,res,next) => {
+   res.render('authentication/signup',{
+     path: '/signup',
+     pageTitle: 'Signup',
+     isAuthenticated : false
+   });
+ };
+
+ exports.postSignup = (req,res,next) => {};
