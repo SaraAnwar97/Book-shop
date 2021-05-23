@@ -14,15 +14,31 @@ exports.getLogin = (req,res,next) => {
 
 
     exports.postLogin = (req,res,next) => {
-     User.findById("60a1d3760fd0460b2f1cc4c5")
+      const email = req.body.email;
+      const password = req.body.password;
+     User.findOne({email: email})
      .then(user => {
-      req.session.isLoggedIn = true;
-      req.session.user = user;
-      req.session.save(err=>{
-        console.log(err);
-        res.redirect('/');
-      })
-      //res.redirect('/');
+       if(!user){ //user not found
+         return res.redirect('/login');
+       }
+       bcrypt.compare(password, user.password)
+       .then(doMatch =>{
+         if(doMatch){
+          req.session.isLoggedIn = true;
+          req.session.user = user;
+          return req.session.save(err=>{
+            console.log(err);
+            res.redirect('/');
+          });
+         }
+         res.redirect('/login'); // if pws do not match
+
+       })
+       .catch(err =>{
+         console.log(err);
+         res.redirect('/login');
+       });
+    
      })
      .catch(err => console.log(err));
   };
@@ -46,7 +62,7 @@ exports.getLogin = (req,res,next) => {
      {
        return res.redirect('/signup');
      }
-    return bcrypt.hash(password,12
+    return bcrypt.hash(password,12)
       .then(hashedPassword =>{
         //user does not exist
         const user = new User({
@@ -59,7 +75,7 @@ exports.getLogin = (req,res,next) => {
       .then(result =>{
         res.redirect('/login');
       })
-      );
+      
    })
    
    .catch(err =>{
