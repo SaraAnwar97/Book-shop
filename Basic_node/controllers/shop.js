@@ -26,8 +26,7 @@ Product.findById(prodId)
     res.render('shop/product-detail',{
         product : product,
         pageTitle : product.title,
-        path: '/products',
-        isAuthenticated: req.session.isLoggedIn
+        path: '/products'
     });
 })
 .catch(err =>{
