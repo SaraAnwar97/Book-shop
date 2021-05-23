@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/users');
 exports.getLogin = (req,res,next) => {
 // const isLoggedIn = req.get('Cookie').split('=')[1];
@@ -44,13 +45,17 @@ exports.getLogin = (req,res,next) => {
      if(userDoc) //user exists
      {
        return res.redirect('/signup');
-     }//user does not exist
+     }
+    return bcrypt.hash(password,12);
+   })
+   .then(hashedPassword =>{
+     //user does not exist
      const user = new User({
-       email: email,
-       password: password,
-       cart: {items:[]}
-     });
-     return user.save();
+      email: email,
+      password: hashedPassword,
+      cart: {items:[]}
+    });
+    return user.save();
    })
    .then(result =>{
      res.redirect('/login');
