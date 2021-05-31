@@ -1,5 +1,13 @@
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 const User = require('../models/users');
+//configure transporter
+const transporter = nodemailer.createTransport(sendgridTransport({
+  auth: { // can use username & password
+    api_key: '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'
+  }
+}));
 exports.getLogin = (req,res,next) => {
 // const isLoggedIn = req.get('Cookie').split('=')[1];
   //console.log(req.get('Cookie').split(';')[1].trim().split('=')[1]); //headername:Cookie
@@ -89,10 +97,18 @@ exports.getLogin = (req,res,next) => {
       })
       .then(result =>{
         res.redirect('/login');
-      })
-      
+        //returns a promise
+        transporter.sendMail({
+          to: email,
+          //verified email in sendgrid sender authentication
+          from: 'es-SaraAnwar2021@alexu.edu.eg',
+          subject: 'signup succeeded!',
+          html: '<h1> you successfully signed up! </h1>'
+        });
+      }).catch(err =>{
+        console.log(err);
+      });
    })
-   
    .catch(err =>{
      console.log(err);
    });
