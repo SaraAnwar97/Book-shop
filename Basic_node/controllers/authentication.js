@@ -187,10 +187,46 @@ User.findOne({resetToken : token , resetTokenExpiration: {$gt: Date.now()}})
     path: '/new-password',
     pageTitle: 'New Password',
     errorMessage : message,
-    userId : user._id.toString()
+    userId : user._id.toString(),
+    passwordToken: token
   });
 })
 .catch(err =>{
   console.log(err);
 });
  };
+
+exports.postNewPassword = (req,res,next) =>{
+  const newPassword = req.body.password;
+  const userId = req.body.userId;
+  const passwordToken = req.body.passwordToken;
+  let resetUser;
+
+  User.findOne({
+    resetToken: passwordToken,
+    resetTokenExpiration: {$gt : Date.now() },
+    _id : userId
+  })
+  .then(user =>{
+    resetUser = user;
+    return bcrypt.hash(newPassword,12);
+  }).then(hashedPassword =>{
+    resetUser.password = hashedPassword;
+    resetUser.resetToken = undefined;
+    resetUser.resetTokenExpiration = undefined;
+    return resetUser.save();
+  }).then(result =>{
+    res.redirect('/login');
+    transporter.sendMail({
+      to: resetUser.email,
+      //verified email in sendgrid sender authentication
+      from: 'es-SaraAnwar2021@alexu.edu.eg',
+      subject: 'Password updated',
+      html:'Your password is updated'
+    });
+
+  }).catch(err =>{
+    console.log(err);
+  })
+
+};
