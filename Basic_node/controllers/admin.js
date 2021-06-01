@@ -85,7 +85,7 @@ exports.postEditProduct=(req,res,next)=>{
 
 exports.getProductList = (req,res,next) =>{
     
-    Product.find()
+    Product.find({userId : req.user._id})
     .then(products => {
         res.render('admin/product-list',{
             prods: products,
