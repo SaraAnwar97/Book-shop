@@ -66,17 +66,20 @@ exports.postEditProduct=(req,res,next)=>{
     const updatedImageUrl = req.body.imageUrl;
     const updatedDescription = req.body.description;
    Product.findById(prodId).then(product => {
+       if(product.userId.toString() !== req.user._id.toString()){
+           return res.redirect('/')
+       }
        //product is a mongoose object with all mongoose methods
        product.title = updatedTitle,
        product.price = updatedPrice
        product.description = updatedDescription,
        product.imageUrl = updatedImageUrl
-       return product.save();
+       return product.save().then(result =>{
+        console.log('product updated');
+        res.redirect('/admin/product-list')
+    });
    })
-   .then(result =>{
-       console.log('product updated');
-       res.redirect('/admin/product-list')
-   })
+   
    .catch(err =>{
        console.log(err);
    })
@@ -102,7 +105,7 @@ exports.getProductList = (req,res,next) =>{
 
 exports.postDeleteProduct=(req,res,next)=>{
     const prodId = req.body.productId;
-    Product.findByIdAndRemove(prodId)
+    Product.deleteOne({_id :prodId, userId: req.user._id})
     .then(()=>{
         console.log('destroyed product')
         res.redirect('/admin/product-list');
