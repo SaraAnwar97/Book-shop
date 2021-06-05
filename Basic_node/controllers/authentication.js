@@ -89,14 +89,7 @@ exports.getLogin = (req,res,next) => {
       errorMessage : errors.array()[0].msg
    });
   }
-   User.findOne({ email: email })
-   .then(userDoc =>{
-     if(userDoc) //user exists
-     {
-      req.flash('error','Email exists already, please choose a different one');
-       return res.redirect('/signup');
-     }
-    return bcrypt.hash(password,12)
+    bcrypt.hash(password,12)
       .then(hashedPassword =>{
         //user does not exist
         const user = new User({
@@ -119,10 +112,6 @@ exports.getLogin = (req,res,next) => {
       }).catch(err =>{
         console.log(err);
       });
-   })
-   .catch(err =>{
-     console.log(err);
-   });
  };
 
  exports.postLogout = (req,res,next) => {
