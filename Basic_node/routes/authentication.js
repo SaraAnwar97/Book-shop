@@ -7,7 +7,7 @@ router.get('/login', authenticationController.getLogin);
 router.post('/login', authenticationController.postLogin);
 router.post('/logout',authenticationController.postLogout);
 router.get('/signup',authenticationController.getSignup);
-router.post('/signup', check('email').isEmail(),authenticationController.postSignup);
+router.post('/signup', check('email').isEmail().withMessage('Please enter a valid email'),authenticationController.postSignup);
 router.get('/reset', authenticationController.getReset);
 router.post('/reset', authenticationController.postReset);
 router.get('/reset/:token', authenticationController.getNewPassword);

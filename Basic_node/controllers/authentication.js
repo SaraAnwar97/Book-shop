@@ -86,7 +86,7 @@ exports.getLogin = (req,res,next) => {
      return res.status(422).render('authentication/signup',{
       path: '/signup',
       pageTitle: 'Signup',
-      errorMessage : errors.array()
+      errorMessage : errors.array()[0].msg
    });
   }
    User.findOne({ email: email })
