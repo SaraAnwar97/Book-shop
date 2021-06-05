@@ -5,7 +5,12 @@ const User = require('../models/users');
 const router = express.Router();
 
 router.get('/login', authenticationController.getLogin);
-router.post('/login', authenticationController.postLogin);
+router.post('/login',
+[body('email','Incorrect email').isEmail(),
+body('password','Incorrect password').isLength({min:5 , max:10}).isAlphanumeric()
+
+],
+ authenticationController.postLogin);
 router.post('/logout',authenticationController.postLogout);
 router.get('/signup',authenticationController.getSignup);
 router.post('/signup', 
