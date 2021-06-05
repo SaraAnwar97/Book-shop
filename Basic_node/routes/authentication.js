@@ -16,8 +16,13 @@ router.post('/signup',
 }),
 body('password',
 'Please enter a password with only numbers , text , at least 5 characters and at most 10 characters'
-).isLength({min: 5, max:10}).isAlphanumeric()
-
+).isLength({min: 5, max:10}).isAlphanumeric(),
+body('confirmPassword').custom((value,{req})=>{
+    if(value !== req.body.password){
+        throw new Error ('Passwords have to match!');
+    }
+    return true;
+})
 ]
 ,authenticationController.postSignup);
 router.get('/reset', authenticationController.getReset);
