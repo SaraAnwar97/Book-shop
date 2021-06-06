@@ -84,8 +84,8 @@ exports.getLogin = (req,res,next) => {
        email:"",
        password: "",
        confirmPassword: ""
-     }
-     
+     },
+     validationErrors : []
    });
  };
 
@@ -102,7 +102,8 @@ exports.getLogin = (req,res,next) => {
       errorMessage : errors.array()[0].msg,
       oldInput: {email:email,
          password:password , 
-         confirmPassword: confirmPassword } 
+         confirmPassword: confirmPassword } ,
+         validationErrors : errors.array() // arr of errs
    });
   }
     bcrypt.hash(password,12)
