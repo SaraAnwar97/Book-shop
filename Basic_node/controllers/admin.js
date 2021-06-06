@@ -1,4 +1,5 @@
 const Product = require('../models/product'); // importing Product class
+const {validationResult} = require('express-validator/check');
 exports.getAddProduct = (req,res,next)=>{
     if(!req.session.isLoggedIn){
         return res.redirect('/login');
@@ -6,7 +7,10 @@ exports.getAddProduct = (req,res,next)=>{
     res.render('admin/edit-product',{
     pageTitle:'Add product',
     path:'admin/add-product',
-    editing: false
+    editing: false,
+    hasError: false,
+    errorMessage: null,
+    validationErrors : []
  });
 };
 // in post requests, you use req body
@@ -15,6 +19,23 @@ exports.postAddProduct = (req,res,next)=>{
     const imageUrl = req.body.imageUrl;
     const description = req.body.description;
     const price = req.body.price;
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return  res.status(422).render('admin/edit-product',{
+            pageTitle:'Add product',
+            path:'admin/add-product',
+            editing: false,
+            hasError: true,
+            Oldproduct : {
+                title: title,
+                imageUrl: imageUrl,
+                description: description,
+                price: price
+            },
+            errorMessage: errors.array()[0].msg,
+            validationErrors : errors.array()
+         });
+    }
     //storing user id as a reference to the user who's adding a prod
     const product = new Product(
         {
@@ -50,7 +71,9 @@ exports.getEditProduct = (req,res,next)=>{
             pageTitle:'edit product',
             path:'admin/edit-product',
             editing: editMode,
-            product : product,
+            hasError: true,
+            errorMessage: null,
+            validationErrors : []
          });
     })
     .catch(err =>{
@@ -65,6 +88,23 @@ exports.postEditProduct=(req,res,next)=>{
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
     const updatedDescription = req.body.description;
+    if(!errors.isEmpty()){
+        return  res.status(422).render('admin/edit-product',{
+              pageTitle:'Edit product',
+              path:'admin/edit-product',
+              editing: true,
+              hasError: true,
+              Oldproduct : {
+                  title: updatedTitle,
+                  imageUrl: updatedImageUrl,
+                  description: updatedDescription,
+                  price: updatedPrice,
+                  _id : prodId
+              },
+              errorMessage: errors.array()[0].msg,
+              validationErrors : errors.array()
+           });
+      }
    Product.findById(prodId).then(product => {
        if(product.userId.toString() !== req.user._id.toString()){
            return res.redirect('/')
