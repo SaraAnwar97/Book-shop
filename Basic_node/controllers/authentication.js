@@ -79,7 +79,12 @@ exports.getLogin = (req,res,next) => {
    res.render('authentication/signup',{
      path: '/signup',
      pageTitle: 'Signup',
-     errorMessage : message
+     errorMessage : message,
+     oldInput : {
+       email:"",
+       password: "",
+       confirmPassword: ""
+     }
      
    });
  };
@@ -94,7 +99,10 @@ exports.getLogin = (req,res,next) => {
      return res.status(422).render('authentication/signup',{
       path: '/signup',
       pageTitle: 'Signup',
-      errorMessage : errors.array()[0].msg
+      errorMessage : errors.array()[0].msg,
+      oldInput: {email:email,
+         password:password , 
+         confirmPassword: confirmPassword } 
    });
   }
     bcrypt.hash(password,12)
