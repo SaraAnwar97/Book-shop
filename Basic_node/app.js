@@ -39,10 +39,14 @@ app.use((req,res,next)=>{
   }
   User.findById(req.session.user._id)
   .then(user => {
+    if(!user)
+    return next(); //making sure we dont save an undefined user obj
     req.user = user;
    next();
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    throw new Error(err); //techincal error
+  });
 });
 
 app.use((req,res,next) =>{
