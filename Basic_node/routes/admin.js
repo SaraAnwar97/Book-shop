@@ -14,7 +14,7 @@ router.get('/product-list',isAuth, adminController.getProductList);
      body('title').isString().isLength({min:3}).trim(),
      body('imageUrl').isURL(),
      body('price').isFloat(),
-     body('descroption').isLength({min:5 , max: 200}).trim(),
+     body('description').isLength({min:5 , max: 200}).trim(),
      
  ]
  ,isAuth,adminController.postAddProduct);  
@@ -24,7 +24,7 @@ router.get('/product-list',isAuth, adminController.getProductList);
     body('title').isString().isLength({min:3}).trim(),
     body('imageUrl').isURL(),
     body('price').isFloat(),
-    body('descroption').isLength({min:5 , max: 200}).trim(),
+    body('description').isLength({min:5 , max: 200}).trim(),
     
 ]
  , isAuth, adminController.postEditProduct);
