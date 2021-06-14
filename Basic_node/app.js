@@ -33,7 +33,15 @@ app.use(session(
 );
 app.use(csrfProtection);
 app.use(flash());
+
+app.use((req,res,next) =>{
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+  });
+
 app.use((req,res,next)=>{
+  //throw new Error('Sync dummy'); //techincal error
   if(!req.session.user){
    return next();
   }
@@ -45,16 +53,10 @@ app.use((req,res,next)=>{
    next();
   })
   .catch(err => {
-    throw new Error(err); //techincal error
-    //next();
+   next(new Error(err));
   });
 });
 
-app.use((req,res,next) =>{
-res.locals.isAuthenticated = req.session.isLoggedIn;
-res.locals.csrfToken = req.csrfToken();
-next();
-});
 
 // filt ering paths
 app.use('/admin',adminRoutes);//acessing routes object
@@ -67,8 +69,13 @@ app.use(errorController.get404Page);
 //const url = 'mongodb+srv://Sara:Ss4923@@@cluster0.ldpfv.mongodb.net/shop?retryWrites=true&w=majority';
 app.use((error,req,res,next)=>{
   //res.status(error.httpStatusCode).render(...);
-  res.redirect('/500');
+ // res.redirect('/500');
+  res.status(500)
+  .render('500' ,{pageTitle : ' Error',
+   path :'/500' ,
+   isAuthententicated: req.session.isLoggedIn});
 });
+
 mongoose.connect(MONGODB_URI,{useNewUrlParser: true },{ useUnifiedTopology: true })
 .then(result => {
   app.listen(3000);
