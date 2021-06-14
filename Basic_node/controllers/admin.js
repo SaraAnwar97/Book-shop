@@ -1,4 +1,5 @@
 const Product = require('../models/product'); // importing Product class
+const mongoose = require('mongoose');
 const {validationResult} = require('express-validator/check');
 exports.getAddProduct = (req,res,next)=>{
     if(!req.session.isLoggedIn){
@@ -21,7 +22,8 @@ exports.postAddProduct = (req,res,next)=>{
     const price = req.body.price;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-      return  res.status(422).render('admin/edit-product',{
+        console.log(errors.array());
+        return  res.status(422).render('admin/edit-product',{
             pageTitle:'Add product',
             path:'admin/add-product',
             editing: false,
@@ -38,7 +40,7 @@ exports.postAddProduct = (req,res,next)=>{
     }
     //storing user id as a reference to the user who's adding a prod
     const product = new Product(
-        {
+        {   _id :new  mongoose.Types.ObjectId('60a1d6795f794f0c2fcd9305'),
             title:title,
             price:price,
             description:description,
@@ -52,7 +54,21 @@ exports.postAddProduct = (req,res,next)=>{
         res.redirect('/admin/product-list');
     })
     .catch(err =>{
-        console.log(err);
+        // return  res.status(500).render('admin/edit-product',{
+        //     pageTitle:'Add product',
+        //     path:'admin/add-product',
+        //     editing: false,
+        //     hasError: true,
+        //     Oldproduct : {
+        //         title: title,
+        //         imageUrl: imageUrl,
+        //         description: description,
+        //         price: price
+        //     },
+        //     errorMessage:'Database operation failed, please try again',
+        //     validationErrors : []
+        //});
+        res.redirect('/500');
     });
 };
 
@@ -71,7 +87,7 @@ exports.getEditProduct = (req,res,next)=>{
             pageTitle:'edit product',
             path:'admin/edit-product',
             editing: editMode,
-            hasError: true,
+            hasError: false,
             errorMessage: null,
             validationErrors : []
          });
@@ -88,6 +104,7 @@ exports.postEditProduct=(req,res,next)=>{
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
     const updatedDescription = req.body.description;
+    const errors = validationResult(req);
     if(!errors.isEmpty()){
         return  res.status(422).render('admin/edit-product',{
               pageTitle:'Edit product',

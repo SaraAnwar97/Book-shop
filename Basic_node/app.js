@@ -40,12 +40,13 @@ app.use((req,res,next)=>{
   User.findById(req.session.user._id)
   .then(user => {
     if(!user)
-    return next(); //making sure we dont save an undefined user obj
+     return next(); //making sure we dont save an undefined user obj
     req.user = user;
    next();
   })
   .catch(err => {
     throw new Error(err); //techincal error
+    //next();
   });
 });
 
@@ -59,6 +60,7 @@ next();
 app.use('/admin',adminRoutes);//acessing routes object
 app.use(shopRoutes);
 app.use(authenticationRoutes);
+app.get('/500',errorController.get500Page);
 //adding 404 error page , use: handles all http methods not only get requests
 app.use(errorController.get404Page);
 //const url = 'mongodb+srv://Sara:Ss4923@cluster0.ldpfv.mongodb.net/shop?retryWrites=true&w=majority';
