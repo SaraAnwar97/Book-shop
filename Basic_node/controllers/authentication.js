@@ -91,7 +91,9 @@ exports.getLogin = (req,res,next) => {
        });
     
      })
-     .catch(err => console.log(err));
+     const error = new Error(err);
+     error.httpStatusCode = 500;
+     return next(error);
   };
 
 
@@ -153,7 +155,9 @@ exports.getLogin = (req,res,next) => {
           html: '<h1> you successfully signed up! </h1>'
         });
       }).catch(err =>{
-        console.log(err);
+        const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
       });
  };
 
@@ -209,7 +213,9 @@ exports.getLogin = (req,res,next) => {
       });
     })
      .catch(err=>{
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
      });
    });
 
@@ -234,7 +240,9 @@ User.findOne({resetToken : token , resetTokenExpiration: {$gt: Date.now()}})
   });
 })
 .catch(err =>{
-  console.log(err);
+  const error = new Error(err);
+  error.httpStatusCode = 500;
+  return next(error);
 });
  };
 
@@ -268,7 +276,9 @@ exports.postNewPassword = (req,res,next) =>{
     });
 
   }).catch(err =>{
-    console.log(err);
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   })
 
 };

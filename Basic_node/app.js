@@ -65,11 +65,14 @@ app.get('/500',errorController.get500Page);
 app.use(errorController.get404Page);
 //const url = 'mongodb+srv://Sara:Ss4923@cluster0.ldpfv.mongodb.net/shop?retryWrites=true&w=majority';
 //const url = 'mongodb+srv://Sara:Ss4923@@@cluster0.ldpfv.mongodb.net/shop?retryWrites=true&w=majority';
-mongoose
-.connect(MONGODB_URI,{useNewUrlParser: true },{ useUnifiedTopology: true })
+app.use((error,req,res,next)=>{
+  //res.status(error.httpStatusCode).render(...);
+  res.redirect('/500');
+});
+mongoose.connect(MONGODB_URI,{useNewUrlParser: true },{ useUnifiedTopology: true })
 .then(result => {
   app.listen(3000);
 })
 .catch(err => {
   console.log(err);
-});
+}); 
