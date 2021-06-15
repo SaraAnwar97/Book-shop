@@ -17,7 +17,7 @@ exports.getAddProduct = (req,res,next)=>{
 // in post requests, you use req body
 exports.postAddProduct = (req,res,next)=>{
     const title = req.body.title;
-    const imageUrl = req.body.imageUrl;
+    const imageUrl = req.body.image;
     const description = req.body.description;
     const price = req.body.price;
     const errors = validationResult(req);
