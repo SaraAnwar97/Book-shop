@@ -24,7 +24,7 @@ const shopRoutes = require('./routes/shop');
 const authenticationRoutes = require('./routes/authentication');
 
 app.use(bodyParser.urlencoded({extended:false}));
-app.use(multer().single('image'));
+app.use(multer({dest:'images'}).single('image'));
 app.use(express.static(path.join(__dirname,'public'))); // serving files statically so user can access them
 app.use(session(
   {secret: 'my secret', 
