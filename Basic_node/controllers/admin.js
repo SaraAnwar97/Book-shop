@@ -7,7 +7,7 @@ exports.getAddProduct = (req,res,next)=>{
     }
     res.render('admin/edit-product',{
     pageTitle:'Add product',
-    path:'admin/add-product',
+    path:'/admin/add-product',
     editing: false,
     hasError: false,
     errorMessage: null,
@@ -23,7 +23,7 @@ exports.postAddProduct = (req,res,next)=>{
     if(!image){
         return  res.status(422).render('admin/edit-product',{
             pageTitle:'Add product',
-            path:'admin/add-product',
+            path:'/admin/add-product',
             editing: false,
             hasError: true,
             Oldproduct : {
@@ -40,7 +40,7 @@ exports.postAddProduct = (req,res,next)=>{
         console.log(errors.array());
         return  res.status(422).render('admin/edit-product',{
             pageTitle:'Add product',
-            path:'admin/add-product',
+            path:'/admin/add-product',
             editing: false,
             hasError: true,
             Oldproduct : {
@@ -103,7 +103,7 @@ exports.getEditProduct = (req,res,next)=>{
         }
         res.render('admin/edit-product',{
             pageTitle:'edit product',
-            path:'admin/edit-product',
+            path:'/admin/edit-product',
             editing: editMode,
             product: product,
             hasError: false,
@@ -129,7 +129,7 @@ exports.postEditProduct=(req,res,next)=>{
     if(!errors.isEmpty()){
         return  res.status(422).render('admin/edit-product',{
               pageTitle:'Edit product',
-              path:'admin/edit-product',
+              path:'/admin/edit-product',
               editing: true,
               hasError: true,
               Oldproduct : {
