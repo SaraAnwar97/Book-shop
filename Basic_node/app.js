@@ -10,6 +10,7 @@ const User = require('./models/users');
 const MONGODB_URI = 'mongodb+srv://Sara:Ss4923@@@cluster0.ldpfv.mongodb.net/shop';
 const app = express();
 const flash = require('connect-flash');
+const multer = require('multer');
 const store = new mongoDBStore({
 uri: MONGODB_URI,
 collection: 'sessions'
@@ -23,6 +24,7 @@ const shopRoutes = require('./routes/shop');
 const authenticationRoutes = require('./routes/authentication');
 
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(multer().single('image'));
 app.use(express.static(path.join(__dirname,'public'))); // serving files statically so user can access them
 app.use(session(
   {secret: 'my secret', 
