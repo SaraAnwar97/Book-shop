@@ -22,7 +22,7 @@ const fileStorage = multer.diskStorage({
   },
   filename:(req,file,cb) =>{
     //if two images have same name , they do not override
-    cb(null, new Date().toString() + '_'  + file.originalname); 
+    cb(null, new Date().toISOString() + '_'  + file.originalname); 
   }
 
 });
@@ -93,6 +93,7 @@ app.use(errorController.get404Page);
 app.use((error,req,res,next)=>{
   //res.status(error.httpStatusCode).render(...);
  // res.redirect('/500');
+ //console.log(error);
   res.status(500)
   .render('500' ,{pageTitle : ' Error',
    path :'/500' ,

@@ -17,9 +17,24 @@ exports.getAddProduct = (req,res,next)=>{
 // in post requests, you use req body
 exports.postAddProduct = (req,res,next)=>{
     const title = req.body.title;
-    const imageUrl = req.body.image;
+    const image = req.file;
     const description = req.body.description;
     const price = req.body.price;
+    if(!image){
+        return  res.status(422).render('admin/edit-product',{
+            pageTitle:'Add product',
+            path:'admin/add-product',
+            editing: false,
+            hasError: true,
+            Oldproduct : {
+                title: title,
+                description: description,
+                price: price
+            },
+            errorMessage: 'Attached file is not an image',
+            validationErrors : []
+         });
+    }
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         console.log(errors.array());
@@ -30,7 +45,6 @@ exports.postAddProduct = (req,res,next)=>{
             hasError: true,
             Oldproduct : {
                 title: title,
-                imageUrl: imageUrl,
                 description: description,
                 price: price
             },
@@ -38,13 +52,13 @@ exports.postAddProduct = (req,res,next)=>{
             validationErrors : errors.array()
          });
     }
+    const imageUrl = image.path;
     //storing user id as a reference to the user who's adding a prod
     const product = new Product(
-        {   _id :new  mongoose.Types.ObjectId('60a1d6795f794f0c2fcd9305'),
-            title:title,
+        {   title:title,
             price:price,
             description:description,
-            imageUrl:imageUrl,
+            imageUrl: imageUrl,
             userId : req.user
         }
     );
@@ -91,6 +105,7 @@ exports.getEditProduct = (req,res,next)=>{
             pageTitle:'edit product',
             path:'admin/edit-product',
             editing: editMode,
+            product: product,
             hasError: false,
             errorMessage: null,
             validationErrors : []
@@ -100,7 +115,7 @@ exports.getEditProduct = (req,res,next)=>{
        const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
-    })
+    });
 
 };
 
@@ -108,7 +123,7 @@ exports.postEditProduct=(req,res,next)=>{
     const prodId = req.body.productId;
     const updatedTitle = req.body.title;
     const updatedPrice = req.body.price;
-    const updatedImageUrl = req.body.imageUrl;
+    const image = req.file;
     const updatedDescription = req.body.description;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -119,7 +134,6 @@ exports.postEditProduct=(req,res,next)=>{
               hasError: true,
               Oldproduct : {
                   title: updatedTitle,
-                  imageUrl: updatedImageUrl,
                   description: updatedDescription,
                   price: updatedPrice,
                   _id : prodId
@@ -133,10 +147,12 @@ exports.postEditProduct=(req,res,next)=>{
            return res.redirect('/')
        }
        //product is a mongoose object with all mongoose methods
-       product.title = updatedTitle,
-       product.price = updatedPrice
-       product.description = updatedDescription,
-       product.imageUrl = updatedImageUrl
+       product.title = updatedTitle;
+       product.price = updatedPrice;
+       product.description = updatedDescription;
+       if(image){
+           product.imageUrl = image.path;
+       }
        return product.save().then(result =>{
         console.log('product updated');
         res.redirect('/admin/product-list')
@@ -147,7 +163,7 @@ exports.postEditProduct=(req,res,next)=>{
     const error = new Error(err);
     error.httpStatusCode = 500;
     return next(error);
-   })
+   });
 
 };
 
