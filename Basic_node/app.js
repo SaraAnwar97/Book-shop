@@ -16,6 +16,16 @@ uri: MONGODB_URI,
 collection: 'sessions'
 });
 const csrfProtection = csrf();
+const fileStorage = multer.diskStorage({
+  destination:(req,file,cb)=>{
+    cb(null,'images');
+  },
+  filename:(req,file,cb) =>{
+    //if two images have same name , they do not override
+    cb(null, new Date().toString() + '_'  + file.originalname); 
+  }
+
+});
 
 app.set('view engine','ejs'); // setting default template engine to ejs
 app.set('views','views');//where i am keeping my html files
@@ -24,7 +34,7 @@ const shopRoutes = require('./routes/shop');
 const authenticationRoutes = require('./routes/authentication');
 
 app.use(bodyParser.urlencoded({extended:false}));
-app.use(multer({dest:'images'}).single('image'));
+app.use(multer({storage: fileStorage}).single('image'));
 app.use(express.static(path.join(__dirname,'public'))); // serving files statically so user can access them
 app.use(session(
   {secret: 'my secret', 
