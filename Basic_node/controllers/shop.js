@@ -167,6 +167,10 @@ exports.getInvoice = (req,res,next) =>{
         if(err){
             return next(err);
         }
+        res.setHeader('Content-Type', 'application/pdf'); //opens pdf in browser
+       // res.setHeader('Content-Disposition', 'attachment; filename = "' + invoiceName + '"'); // les you save pdf with correct name & extension
+       res.setHeader('Content-Disposition', 'inline; filename = "' + invoiceName + '"');
+
         res.send(data);
     });
 };
