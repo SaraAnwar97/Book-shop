@@ -92,7 +92,7 @@ exports.postAddProduct = (req,res,next)=>{
 
 exports.getEditProduct = (req,res,next)=>{
     const editMode = req.query.edit;
-    if(! editMode){
+    if(!editMode){
         return res.redirect('/');
     }
     const prodId = req.params.productId; //extracting productId from URL in routes
@@ -105,7 +105,7 @@ exports.getEditProduct = (req,res,next)=>{
             pageTitle:'edit product',
             path:'/admin/edit-product',
             editing: editMode,
-            product: product,
+            Oldproduct: product,
             hasError: false,
             errorMessage: null,
             validationErrors : []
@@ -176,7 +176,7 @@ exports.getProductList = (req,res,next) =>{
             pageTitle: 'Admin Products',
             path : '/admin/product-list',
             
-    })
+    });
 })
     .catch(err => {
         const error = new Error(err);
@@ -197,6 +197,6 @@ exports.postDeleteProduct=(req,res,next)=>{
         const error = new Error(err);
         error.httpStatusCode = 500;
         return next(error);
-    })
+    });
    
 };
