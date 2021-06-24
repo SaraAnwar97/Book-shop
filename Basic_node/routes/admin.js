@@ -26,5 +26,5 @@ router.get('/product-list',isAuth, adminController.getProductList);
     
 ]
  , isAuth, adminController.postEditProduct);
- router.post('/delete-product',isAuth, adminController.postDeleteProduct);
+ router.delete('/product-list/:productId',isAuth, adminController.deleteProduct);
 module.exports = router;
