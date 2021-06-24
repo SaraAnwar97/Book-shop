@@ -3,6 +3,7 @@ const Order = require('../models/order');
 const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
+const itemPerPage = 2;
 
 exports.getProducts = (req, res, next) => {
     Product.find()
@@ -42,14 +43,15 @@ Product.findById(prodId)
 }
 
 exports.getIndex = (req, res, next) => {
+    const page = req.query.page;
     Product.find()
+    .skip((page-1) * itemPerPage) // skips first two items
+    .limit(itemPerPage) // limits amount of data fetched to 2
     .then(products =>{
         res.render('shop/index',{
             prods: products,
             pageTitle: 'All Shop',
             path : '/',
-            
-           
     });
 })
     .catch(err =>{
