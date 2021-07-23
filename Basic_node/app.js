@@ -11,7 +11,7 @@ const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO
 const app = express();
 const flash = require('connect-flash');
 const multer = require('multer');
-
+const helmet = require('helmet');
 console.log(process.env.NODE_ENV);
 const store = new mongoDBStore({
 uri: MONGODB_URI,
@@ -45,6 +45,8 @@ app.set('views','views');//where i am keeping my html files
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authenticationRoutes = require('./routes/authentication');
+
+app.use(helmet()); // will run on all incoming requests
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
