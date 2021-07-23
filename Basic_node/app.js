@@ -7,10 +7,12 @@ const mongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const errorController = require('./controllers/404');
 const User = require('./models/users');
-const MONGODB_URI = 'mongodb+srv://Sara:Ss4923@@@cluster0.ldpfv.mongodb.net/shop';
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.ldpfv.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`
 const app = express();
 const flash = require('connect-flash');
 const multer = require('multer');
+
+console.log(process.env.NODE_ENV);
 const store = new mongoDBStore({
 uri: MONGODB_URI,
 collection: 'sessions'
@@ -104,7 +106,7 @@ app.use((error,req,res,next)=>{
 
 mongoose.connect(MONGODB_URI,{useNewUrlParser: true },{ useUnifiedTopology: true })
 .then(result => {
-  app.listen(3000);
+  app.listen(process.env.PORT || 3000);
 })
 .catch(err => {
   console.log(err);

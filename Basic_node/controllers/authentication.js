@@ -7,7 +7,7 @@ const User = require('../models/users');
 //configure transporter
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: { // can use username & password
-    api_key: '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'
+    api_key: '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'
   }
 }));
 exports.getLogin = (req,res,next) => {
@@ -152,7 +152,7 @@ exports.getLogin = (req,res,next) => {
         transporter.sendMail({
           to: email,
           //verified email in sendgrid sender authentication
-          from: 'es-SaraAnwar2021@alexu.edu.eg',
+          from: 'saraanwar97@gmail.com',
           subject: 'signup succeeded!',
           html: '<h1> you successfully signed up! </h1>'
         });
@@ -206,7 +206,7 @@ exports.getLogin = (req,res,next) => {
       transporter.sendMail({
         to: req.body.email,
         //verified email in sendgrid sender authentication
-        from: 'es-SaraAnwar2021@alexu.edu.eg',
+        from: 'saraanwar97@gmail.com',
         subject: 'Password Reset',
         html:`
         <p> You requested a password reset </p>
@@ -272,7 +272,7 @@ exports.postNewPassword = (req,res,next) =>{
     transporter.sendMail({
       to: resetUser.email,
       //verified email in sendgrid sender authentication
-      from: 'es-SaraAnwar2021@alexu.edu.eg',
+      from: 'saraanwar97@gmail.com',
       subject: 'Password updated',
       html:'Your password is updated'
     });
