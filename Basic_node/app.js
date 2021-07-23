@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const bodyParser=require('body-parser');
 const mongoose = require('mongoose');
@@ -13,6 +14,7 @@ const flash = require('connect-flash');
 const multer = require('multer');
 const helmet = require('helmet');
 const compression = require('compression');
+const morgan = require('morgan');
 console.log(process.env.NODE_ENV);
 const store = new mongoDBStore({
 uri: MONGODB_URI,
@@ -47,8 +49,13 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authenticationRoutes = require('./routes/authentication');
 
+const accessLogStream = fs.createWriteStream(path.join(__dirname,'access.log'),
+{flags:'a'}
+);
+
 app.use(helmet()); // will run on all incoming requests
 app.use(compression());
+app.use(morgan('combined',{stream: accessLogStream}));
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
