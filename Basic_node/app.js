@@ -12,6 +12,7 @@ const app = express();
 const flash = require('connect-flash');
 const multer = require('multer');
 const helmet = require('helmet');
+const compression = require('compression');
 console.log(process.env.NODE_ENV);
 const store = new mongoDBStore({
 uri: MONGODB_URI,
@@ -47,6 +48,7 @@ const shopRoutes = require('./routes/shop');
 const authenticationRoutes = require('./routes/authentication');
 
 app.use(helmet()); // will run on all incoming requests
+app.use(compression());
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
