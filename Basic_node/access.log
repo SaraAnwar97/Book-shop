@@ -2,3 +2,8 @@
 ::1 - - [23/Jul/2021:20:08:31 +0000] "GET /css/main.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
 ::1 - - [23/Jul/2021:20:08:31 +0000] "GET /css/product.css HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
 ::1 - - [23/Jul/2021:20:08:31 +0000] "GET /images/2021-06-24T20:12:03.759Z_123141180_1018599711897083_4234620259432506575_n.jpg HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+::1 - - [23/Jul/2021:20:26:04 +0000] "GET / HTTP/1.1" 200 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+::1 - - [23/Jul/2021:20:26:05 +0000] "GET /css/main.css HTTP/1.1" 200 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+::1 - - [23/Jul/2021:20:26:05 +0000] "GET /css/product.css HTTP/1.1" 200 379 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+::1 - - [23/Jul/2021:20:26:05 +0000] "GET /images/2021-06-24T20:12:03.759Z_123141180_1018599711897083_4234620259432506575_n.jpg HTTP/1.1" 200 300214 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+::1 - - [23/Jul/2021:20:26:05 +0000] "GET /favicon.ico HTTP/1.1" 404 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
